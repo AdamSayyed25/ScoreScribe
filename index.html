@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ScoreScribe - AI Sportswriter that transforms raw game data into professional narrative summaries">
+    <title>ScoreScribe — AI Sportswriter</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+     <div class="bg-effects">
+        <div class="bg-orb bg-orb-1"></div>
+        <div class="bg-orb bg-orb-2"></div>
+        <div class="bg-orb bg-orb-3"></div>
+    </div>
+
+     <header id="app-header">
+        <div class="header-inner">
+            <div class="logo-group">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="4" y="6" width="32" height="28" rx="3" stroke="currentColor" stroke-width="2.5"/>
+                        <line x1="4" y1="14" x2="36" y2="14" stroke="currentColor" stroke-width="2"/>
+                        <line x1="4" y1="22" x2="36" y2="22" stroke="currentColor" stroke-width="2"/>
+                        <line x1="14" y1="6" x2="14" y2="34" stroke="currentColor" stroke-width="2"/>
+                        <line x1="26" y1="6" x2="26" y2="34" stroke="currentColor" stroke-width="2"/>
+                        <path d="M30 28L34 32" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                        <circle cx="27" cy="25" r="5" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                </div>
+                <h1 class="logo-text">
+                    <span class="logo-score">Score</span><span class="logo-scribe">Scribe</span>
+                </h1>
+            </div>
+            <p class="tagline">AI-Powered Game Narratives</p>
+        </div>
+    </header>
+
+     <main id="app-main">
+         <section id="input-panel" class="panel">
+            <div class="panel-header">
+                <div class="panel-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 20h9"/>
+                        <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+                    </svg>
+                </div>
+                <h2 class="panel-title">Input Data</h2>
+            </div>
+            <div class="panel-body">
+                 <div class="sport-selector" id="sport-selector">
+                    <label class="field-label">Sport</label>
+                    <div class="sport-chips">
+                        <button class="sport-chip active" data-sport="basketball" id="sport-basketball">
+                            <span class="chip-icon"> </span> Basketball
+                        </button>
+                        <button class="sport-chip" data-sport="football" id="sport-football">
+                            <span class="chip-icon"> </span> Football
+                        </button>
+                        <button class="sport-chip" data-sport="baseball" id="sport-baseball">
+                            <span class="chip-icon"> </span> Baseball
+                        </button>
+                        <button class="sport-chip" data-sport="soccer" id="sport-soccer">
+                            <span class="chip-icon"> </span> Soccer
+                        </button>
+                    </div>
+                </div>
+
+                 <div class="team-card" id="home-team-card">
+                    <div class="team-card-header home">
+                        <span class="team-badge">H</span>
+                        <h3 class="team-card-title">Home Team</h3>
+                        <div class="team-indicator home-indicator"></div>
+                    </div>
+                    <div class="team-card-body">
+                        <div class="field-row">
+                            <div class="field-group">
+                                <label class="field-label" for="home-city">City</label>
+                                <input type="text" id="home-city" class="field-input" placeholder="e.g. Denver" autocomplete="off">
+                            </div>
+                            <div class="field-group">
+                                <label class="field-label" for="home-name">Name</label>
+                                <input type="text" id="home-name" class="field-input" placeholder="e.g. Nuggets" autocomplete="off">
+                            </div>
+                        </div>
+
+                        <div class="field-group">
+                            <label class="field-label" for="home-scores">Scores <span class="field-hint">(Final &amp; Quarters, comma-separated)</span></label>
+                            <input type="text" id="home-scores" class="field-input mono" placeholder="e.g. 136, 30, 25, 37, 32, 12" autocomplete="off">
+                            <div class="score-preview" id="home-score-preview"></div>
+                        </div>
+
+                        <div class="field-group">
+                            <label class="field-label">Top Performers <span class="field-hint">(Name, PTS, REB, AST)</span></label>
+                            <div class="performers-list" id="home-performers">
+                                <div class="performer-row">
+                                    <input type="text" class="field-input performer-input" placeholder="e.g. Nikola Jokic, 40, 8, 13" data-team="home" autocomplete="off">
+                                    <button class="btn-remove-performer" title="Remove" aria-label="Remove performer">×</button>
+                                </div>
+                                <div class="performer-row">
+                                    <input type="text" class="field-input performer-input" placeholder="e.g. Jamal Murray, 25, 4, 10" data-team="home" autocomplete="off">
+                                    <button class="btn-remove-performer" title="Remove" aria-label="Remove performer">×</button>
+                                </div>
+                            </div>
+                            <button class="btn-add-performer" id="btn-add-home-performer" data-team="home">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                                Add Performer
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                 <div class="vs-divider">
+                    <div class="vs-line"></div>
+                    <span class="vs-text">VS</span>
+                    <div class="vs-line"></div>
+                </div>
+
+                 <div class="team-card" id="away-team-card">
+                    <div class="team-card-header away">
+                        <span class="team-badge">A</span>
+                        <h3 class="team-card-title">Away Team</h3>
+                        <div class="team-indicator away-indicator"></div>
+                    </div>
+                    <div class="team-card-body">
+                        <div class="field-row">
+                            <div class="field-group">
+                                <label class="field-label" for="away-city">City</label>
+                                <input type="text" id="away-city" class="field-input" placeholder="e.g. San Antonio" autocomplete="off">
+                            </div>
+                            <div class="field-group">
+                                <label class="field-label" for="away-name">Name</label>
+                                <input type="text" id="away-name" class="field-input" placeholder="e.g. Spurs" autocomplete="off">
+                            </div>
+                        </div>
+
+                        <div class="field-group">
+                            <label class="field-label" for="away-scores">Scores <span class="field-hint">(Final &amp; Quarters, comma-separated)</span></label>
+                            <input type="text" id="away-scores" class="field-input mono" placeholder="e.g. 134, 41, 25, 34, 22, 12" autocomplete="off">
+                            <div class="score-preview" id="away-score-preview"></div>
+                        </div>
+
+                        <div class="field-group">
+                            <label class="field-label">Top Performers <span class="field-hint">(Name, PTS, REB, AST)</span></label>
+                            <div class="performers-list" id="away-performers">
+                                <div class="performer-row">
+                                    <input type="text" class="field-input performer-input" placeholder="e.g. Victor Wembanyama, 34, 18, 7" data-team="away" autocomplete="off">
+                                    <button class="btn-remove-performer" title="Remove" aria-label="Remove performer">×</button>
+                                </div>
+                                <div class="performer-row">
+                                    <input type="text" class="field-input performer-input" placeholder="e.g. Stephon Castle, 20, 5, 4" data-team="away" autocomplete="off">
+                                    <button class="btn-remove-performer" title="Remove" aria-label="Remove performer">×</button>
+                                </div>
+                            </div>
+                            <button class="btn-add-performer" id="btn-add-away-performer" data-team="away">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                                Add Performer
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                 <button id="btn-generate" class="btn-generate">
+                    <span class="btn-generate-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22">
+                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                        </svg>
+                    </span>
+                    <span class="btn-generate-text">Generate Recap</span>
+                    <span class="btn-generate-loader" id="generate-loader">
+                        <span class="loader-dot"></span>
+                        <span class="loader-dot"></span>
+                        <span class="loader-dot"></span>
+                    </span>
+                </button>
+            </div>
+        </section>
+
+         <section id="output-panel" class="panel">
+            <div class="panel-header">
+                <div class="panel-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <polyline points="14 2 14 8 20 8"/>
+                        <line x1="16" y1="13" x2="8" y2="13"/>
+                        <line x1="16" y1="17" x2="8" y2="17"/>
+                        <polyline points="10 9 9 9 8 9"/>
+                    </svg>
+                </div>
+                <h2 class="panel-title">Game Recap Summary</h2>
+                <button id="btn-copy" class="btn-copy" title="Copy to clipboard" aria-label="Copy recap to clipboard" style="display:none;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                    </svg>
+                    <span class="copy-label">Copy</span>
+                </button>
+            </div>
+            <div class="panel-body output-body">
+                 <div id="output-empty" class="output-empty">
+                    <div class="empty-illustration">
+                        <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" width="120" height="120">
+                            <rect x="20" y="15" width="80" height="95" rx="8" stroke="currentColor" stroke-width="2" opacity="0.3"/>
+                            <line x1="35" y1="40" x2="85" y2="40" stroke="currentColor" stroke-width="2" opacity="0.2"/>
+                            <line x1="35" y1="52" x2="75" y2="52" stroke="currentColor" stroke-width="2" opacity="0.15"/>
+                            <line x1="35" y1="64" x2="80" y2="64" stroke="currentColor" stroke-width="2" opacity="0.15"/>
+                            <line x1="35" y1="76" x2="65" y2="76" stroke="currentColor" stroke-width="2" opacity="0.1"/>
+                            <line x1="35" y1="88" x2="70" y2="88" stroke="currentColor" stroke-width="2" opacity="0.1"/>
+                            <circle cx="60" cy="60" r="25" stroke="currentColor" stroke-width="2" opacity="0.15" stroke-dasharray="4 4"/>
+                            <polygon points="55 50 55 70 72 60" fill="currentColor" opacity="0.2"/>
+                        </svg>
+                    </div>
+                    <p class="empty-title">Your recap will appear here</p>
+                    <p class="empty-subtitle">Fill in the game data on the left and hit <strong>Generate Recap</strong></p>
+                </div>
+
+                 <div id="output-content" class="output-content" style="display:none;">
+                     <div id="scoreboard" class="scoreboard">
+                        <div class="scoreboard-team home-score-team">
+                            <span class="scoreboard-city" id="scoreboard-home-city">—</span>
+                            <span class="scoreboard-name" id="scoreboard-home-name">—</span>
+                        </div>
+                        <div class="scoreboard-result">
+                            <span class="scoreboard-pts" id="scoreboard-home-pts">0</span>
+                            <span class="scoreboard-dash">—</span>
+                            <span class="scoreboard-pts" id="scoreboard-away-pts">0</span>
+                        </div>
+                        <div class="scoreboard-team away-score-team">
+                            <span class="scoreboard-city" id="scoreboard-away-city">—</span>
+                            <span class="scoreboard-name" id="scoreboard-away-name">—</span>
+                        </div>
+                    </div>
+
+                     <div id="recap-text" class="recap-text"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+     <footer id="app-footer">
+    </footer>
+
+    <script src="index.js"></script>
+</body>
+</html>
