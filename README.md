@@ -1,4 +1,4 @@
-# ScoreScribe — AI-Powered Game Narratives
+# ScoreScribe AI-Powered Game Narratives
 
 ScoreScribe is an end-to-end web application that transforms structured basketball box-score statistics into professional game recap narratives using a fine-tuned BART transformer model.
 
@@ -71,6 +71,11 @@ This installs:
 - `pydantic`
 - `datasets` 
 
+### Download the Fine-tuned model:
+https://drive.google.com/drive/folders/1RhojRqqqeGwMEqsoz3UM6aFUsUOwbfuw?usp=sharing
+
+## Place the extracted final_best_model into the repo 
+<img width="382" height="488" alt="image" src="https://github.com/user-attachments/assets/f817944d-8189-4b36-8c2e-54a31e5daeef" />
 
 ## Running the Demo
 
@@ -94,14 +99,14 @@ Navigate to **http://localhost:8000** in your browser.
 ## How to Use
 
 ### Manual Input
-1. Fill in **Home Team** and **Away Team** sections (city, name, scores, assists, rebounds, turnovers)
+1. Fill in Home Team and Away Team sections (city, name, scores, assists, rebounds, turnovers)
 2. Add top performer stats for each team (Name, PTS, REB, AST, STL, BLK)
-3. Click **Generate Recap**
+3. Click Generate Recap
 4. The AI-generated game summary appears in the right panel
 
 ### Random Game (from Dataset)
-- **Double-click the ScoreScribe logo** to instantly load a random real NBA game from the RotoWire dataset into the form
-- Then click **Generate Recap** to see the model's summary
+- Double-click the ScoreScribe logo to instantly load a random real NBA game from the RotoWire dataset into the form
+- Then click Generate Recap to see the model's summary
 
 ---
 
@@ -115,30 +120,7 @@ Navigate to **http://localhost:8000** in your browser.
 
 ### Example Request
 
-```bash
-curl -X POST http://localhost:8000/generate \
-  -H "Content-Type: application/json" \
-  -d '{
-    "home_city": "Sacramento",
-    "home_name": "Kings",
-    "home_score": 97,
-    "home_assists": 21,
-    "home_rebounds": 46,
-    "home_turnovers": 19,
-    "away_city": "Boston",
-    "away_name": "Celtics",
-    "away_score": 114,
-    "away_assists": 34,
-    "away_rebounds": 40,
-    "away_turnovers": 16,
-    "home_performers": [
-      {"name": "DeMarcus Cousins", "pts": 16, "reb": 7, "ast": 4, "stl": 0, "blk": 1}
-    ],
-    "away_performers": [
-      {"name": "Isaiah Thomas", "pts": 21, "reb": 6, "ast": 9, "stl": 4, "blk": 0}
-    ]
-  }'
-```
+
 
 ### Example Response
 
@@ -151,11 +133,4 @@ curl -X POST http://localhost:8000/generate \
 
 ---
 
-## Model Details
 
-- **Base Model**: `facebook/bart-base` (6 encoder layers, 6 decoder layers, 768 hidden dim)
-- **Fine-tuned on**: RotoWire basketball game summaries
-- **Generation Config**: 4 beams, max 128 tokens, no repeat 3-gram, early stopping
-- **Input Format**: Linearized box-score text (e.g. `[DATE] ... [HOME_TEAM] ... [PLAYER] ...`)
-
----
